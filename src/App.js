@@ -15,7 +15,8 @@ YellowBox.ignoreWarnings([
 ]);
 
 const HomeStack = createStackNavigator({
-  Home: { screen: SearchResult },
+  Home: { screen: Home },
+  SearchResult: { screen: SearchResult },
   SearchWebView: { screen: WebView },
 });
 

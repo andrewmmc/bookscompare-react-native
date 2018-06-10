@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { StyleSheet, Linking } from 'react-native';
+import { StyleSheet } from 'react-native';
 import {
-  Text, Container,
-  Header,
-  Title,
+  Text,
+  Container,
   Content,
   Grid,
   Col,
@@ -61,6 +60,7 @@ export default class WhatsApp extends Component {
 
   render() {
     const { isbnNumber } = this.state;
+    const { navigation: { navigate } } = this.props;
 
     return (
       <Container style={styles.pageContainer}>
@@ -85,9 +85,11 @@ export default class WhatsApp extends Component {
                     placeholder='ISBN 碼'/>
                 </Item>
                 <Button
-                  onPress={() => {}}
-                  style={( isbnNumber === '' ) ? [styles.searchBtn, styles.searchBtnDisabled] : styles.searchBtn}
-                  disabled={ isbnNumber === '' }
+                  onPress={() => navigate('SearchResult', { isbnNumber })}
+                  style={(isbnNumber !== '' && (isbnNumber.length === 10 || isbnNumber.length === 13))
+                    ? styles.searchBtn
+                    : [styles.searchBtn, styles.searchBtnDisabled]}
+                  disabled={!(isbnNumber !== '' && (isbnNumber.length === 10 || isbnNumber.length === 13))}
                   title='搜尋好書價'>
                   <Text>搜尋好書價</Text>
                 </Button>

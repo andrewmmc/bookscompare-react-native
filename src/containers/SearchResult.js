@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import { StyleSheet, Alert, FlatList, View } from 'react-native';
-import { Container, ListItem, Thumbnail, Separator, Text, Body, Right } from 'native-base';
+import { Container, ListItem, Thumbnail, Text, Body, Right } from 'native-base';
 
 const styles = StyleSheet.create({
   'pageContainer': {
@@ -32,21 +32,18 @@ export default class SearchResult extends Component {
     super(props);
     this.state = {
       loading: false,
-      isbnNumber: '4717702901592',
+      isbnNumber: '',
       data: [],
     };
   }
 
   componentDidMount() {
-    this.getSearchResult();
+    const { navigation: { state: { params: { isbnNumber } } } } = this.props;
+    this.setState({ isbnNumber });
+    this.getSearchResult(isbnNumber);
   }
 
-  // onRefresh() {
-  //   this.getSearchResult();
-  // }
-
-  getSearchResult() {
-    const { isbnNumber } = this.state;
+  getSearchResult(isbnNumber) {
     this.setState({ data: [] });
     this.onFetch(isbnNumber);
   }
@@ -58,7 +55,7 @@ export default class SearchResult extends Component {
       this.setState({ loading: false, data });
     } catch (e) {
       console.error(e);
-      Alert.alert('Error', 'Please check your internet connection.', [{ text: 'OK' }], { cancelable: false });
+      Alert.alert('錯誤', 'Please check your internet connection.', [{ text: 'OK' }], { cancelable: false });
     }
   }
 
@@ -67,7 +64,6 @@ export default class SearchResult extends Component {
     const { navigation: { navigate } } = this.props;
 
     const activeData = data.filter((item) => item.active);
-    // const renderData = new List(activeData).sort('price', { order: 'desc' });
 
     const renderItem = ({ item }) => (
       <ListItem onPress={() => navigate('SearchWebView', { url: item.url, title: `${item.source} - ${item.name}` })}>
