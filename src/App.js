@@ -1,9 +1,10 @@
 import React from 'react';
 import { YellowBox } from 'react-native';
-import { createStackNavigator, createBottomTabNavigator, TabBarBottom } from 'react-navigation';
+import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import Home from './containers/Home';
-import SearchResult from './containers/SearchResult';
+import Home from './containers/Home/Home';
+import BarcodeScanner from './containers/Home/BarcodeScanner';
+import SearchResult from './containers/Home/SearchResult';
 import WebView from './components/WebView';
 
 // Dirty fix for react-navigation issue & react-native issue
@@ -12,10 +13,12 @@ import WebView from './components/WebView';
 YellowBox.ignoreWarnings([
   'Warning: isMounted(...) is deprecated',
   'Module RCTImageLoader',
+  'Class RCTCxxModule was not exported',
 ]);
 
 const HomeStack = createStackNavigator({
   Home: { screen: Home },
+  BarcodeScanner: { screen: BarcodeScanner },
   SearchResult: { screen: SearchResult },
   SearchWebView: { screen: WebView },
 });

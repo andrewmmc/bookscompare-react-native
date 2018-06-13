@@ -34,6 +34,18 @@ const styles = StyleSheet.create({
     paddingTop: 50,
     paddingBottom: 50,
   },
+  'scannerBtn': {
+    backgroundColor: '#495963',
+  },
+  'scannerBtnIcon': {
+    fontSize: 22,
+    color: '#FFFFFF',
+    textAlign: 'center',
+  },
+  'scannerBtnContainer': {
+    paddingTop: 2,
+    paddingBottom: 2,
+  },
   'searchBtn': {
     marginTop: 30,
     justifyContent: 'center',
@@ -69,21 +81,34 @@ export default class WhatsApp extends Component {
             <Col style={styles.textContainer}>
               <Icon name="ios-search" style={styles.icon}/>
               <Text style={styles.leadingText}>
-                掃描或輸入書本的 ISBN 碼，讓您輕鬆以最心儀的價格買入！
+                掃描或輸入書本的國際標準書號 (ISBN 碼)，讓您輕鬆以最心儀的價格買入！
               </Text>
             </Col>
           </Grid>
           <Grid>
             <Col>
               <Form>
-                <Item style={styles.inputContainer} regular>
-                  <Input
-                    keyboardType='numeric'
-                    onChangeText={(value) => {
-                      this.setState({ isbnNumber: value });
-                    }}
-                    placeholder='ISBN 碼'/>
-                </Item>
+                <Grid>
+                  <Col size={85}>
+                    <Item style={styles.inputContainer} regular>
+                      <Input
+                        keyboardType='numeric'
+                        onChangeText={(value) => {
+                          this.setState({ isbnNumber: value });
+                        }}
+                        placeholder='ISBN 碼'/>
+                    </Item>
+                  </Col>
+                  <Col size={5} />
+                  <Col size={15} style={styles.scannerBtnContainer}>
+                    <Button
+                      onPress={() => navigate('BarcodeScanner')}
+                      style={styles.scannerBtn}
+                      title='掃描'>
+                      <Text><Icon name="ios-barcode-outline" style={styles.scannerBtnIcon}/></Text>
+                    </Button>
+                  </Col>
+                </Grid>
                 <Button
                   onPress={() => navigate('SearchResult', { isbnNumber })}
                   style={(isbnNumber !== '' && (isbnNumber.length === 10 || isbnNumber.length === 13))
