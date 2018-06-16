@@ -1,32 +1,22 @@
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
-import {
-  Text,
-  Container,
-  Content,
-  Grid,
-  Col,
-  Form,
-  Item,
-  Input,
-  Button,
-} from 'native-base';
+import { Text, Container, Content, Grid, Col, Form, Item, Input, Button } from 'native-base';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const styles = StyleSheet.create({
   'icon': {
     fontSize: 72,
-    color: '#495963',
+    color: 'rgba(68, 66, 65, 1)',
     textAlign: 'center',
   },
   'leadingText': {
-    color: '#495963',
+    color: 'rgba(68, 66, 65, 1)',
     fontSize: 16,
     paddingTop: 20,
     textAlign: 'center',
   },
   'pageContainer': {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: 'rgba(255, 255, 255, 1)',
     paddingLeft: 20,
     paddingRight: 20,
   },
@@ -35,11 +25,11 @@ const styles = StyleSheet.create({
     paddingBottom: 50,
   },
   'scannerBtn': {
-    backgroundColor: '#495963',
+    backgroundColor: 'rgba(68, 66, 65, 1)',
   },
   'scannerBtnIcon': {
     fontSize: 22,
-    color: '#FFFFFF',
+    color: 'rgba(255, 255, 255, 1)',
     textAlign: 'center',
   },
   'scannerBtnContainer': {
@@ -50,16 +40,16 @@ const styles = StyleSheet.create({
     marginTop: 30,
     justifyContent: 'center',
     alignSelf: 'center',
-    backgroundColor: 'rgb(91, 184, 92)',
+    backgroundColor: 'rgba(202, 93, 59, 1)',
   },
   'searchBtnDisabled': {
-    backgroundColor: 'rgba(91, 184, 92, 0.5)',
+    backgroundColor: 'rgba(202, 93, 59, 0.5)',
   },
 });
 
-export default class WhatsApp extends Component {
+export default class Home extends Component {
   static navigationOptions = {
-    title: '比書價 BookCompare',
+    title: '好書價 BookCompare',
   };
 
   constructor(props: Props) {
@@ -76,7 +66,7 @@ export default class WhatsApp extends Component {
 
     return (
       <Container style={styles.pageContainer}>
-        <Content>
+        <Content scrollEnabled={false}>
           <Grid>
             <Col style={styles.textContainer}>
               <Icon name="ios-search" style={styles.icon}/>
