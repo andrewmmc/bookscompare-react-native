@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { Component } from 'react';
-import { StyleSheet, Alert, FlatList, View, ActivityIndicator } from 'react-native';
+import { StyleSheet, FlatList, View, ActivityIndicator } from 'react-native';
 import { Container, Content, ListItem, Thumbnail, Grid, Col, Text, Body, Right } from 'native-base';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { HeaderStyle } from '../../common/style';
@@ -75,6 +75,7 @@ export default class SearchResult extends Component {
     super(props);
     this.state = {
       loading: false,
+      error: false,
       isbnNumber: '',
       data: [],
     };
@@ -98,7 +99,8 @@ export default class SearchResult extends Component {
       this.setState({ loading: false, data });
     } catch (e) {
       console.error(e);
-      Alert.alert('發生未知錯誤', '請檢查您的網絡連接。', [{ text: '好' }], { cancelable: false });
+      // Alert.alert('發生未知錯誤', '請檢查您的網絡連接。', [{ text: '好' }], { cancelable: false });
+      this.setState({ loading: false, error: true });
     }
   }
 
@@ -108,7 +110,7 @@ export default class SearchResult extends Component {
   };
 
   render() {
-    const { loading, data } = this.state;
+    const { loading, error, data } = this.state;
     const activeData = data.filter((item) => item.active);
 
     const renderItem = ({ item }) => (
@@ -128,12 +130,12 @@ export default class SearchResult extends Component {
 
     return (
       <Container style={styles.pageContainer}>
-        {loading &&
+        {loading && !error &&
         <View style={styles.activityIndicatorContainer}>
           <ActivityIndicator animating={loading} style={styles.activityIndicator} />
         </View>
         }
-        { activeData.length > 0 && !loading &&
+        { activeData.length > 0 && !loading && !error &&
           <View style={{ flex: 1 }}>
             <ListItem itemDivider>
               <Text>共找到 {activeData.length} 個結果。</Text>
@@ -146,7 +148,7 @@ export default class SearchResult extends Component {
             />
           </View>
         }
-        { activeData.length <= 0 && !loading &&
+        { activeData.length <= 0 && !loading && !error &&
           <Content scrollEnabled={false}>
             <Grid>
               <Col style={styles.infoContainer}>
@@ -162,6 +164,21 @@ export default class SearchResult extends Component {
               </Col>
             </Grid>
           </Content>
+        }
+        { !loading && error &&
+        <Content scrollEnabled={false}>
+          <Grid>
+            <Col style={styles.infoContainer}>
+              <Icon name="ios-sad-outline" style={styles.icon}/>
+              <Text style={styles.leadText}>
+                未能載入內容
+              </Text>
+              <Text style={styles.describeText}>
+                請檢查您的網絡連接。{'\n'}如持續遇到此問題，請聯絡我們以取得協助。
+              </Text>
+            </Col>
+          </Grid>
+        </Content>
         }
       </Container>
     );

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, WebView as Web, TouchableOpacity, Linking, Platform, ActivityIndicator, Dimensions } from 'react-native';
-import { Container, ActionSheet } from 'native-base';
+import { Container, Content, Grid, Col, Text, ActionSheet } from 'native-base';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { HeaderStyle } from '../../common/style';
 
@@ -8,6 +8,11 @@ const styles = StyleSheet.create({
   'pageContainer': {
     backgroundColor: 'rgba(255, 255, 255, 1)',
     flex: 1,
+  },
+  'actionIcon': {
+    fontSize: 30,
+    color: 'rgba(202, 93, 59, 1)',
+    marginRight: 10
   },
   'activityIndicator': {
     backgroundColor: 'rgba(0, 0, 0, 0.10)',
@@ -18,10 +23,31 @@ const styles = StyleSheet.create({
     top: (Dimensions.get('window').height / 2) - 150,
     left: (Dimensions.get('window').width / 2) - (100 / 2)
   },
+  'infoContainer': {
+    paddingTop: 50,
+    paddingBottom: 50,
+    paddingLeft: 20,
+    paddingRight: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   'icon': {
-    fontSize: 30,
-    color: 'rgba(202, 93, 59, 1)',
-    marginRight: 10
+    fontSize: 72,
+    color: 'rgba(68, 66, 65, 1)',
+    textAlign: 'center',
+  },
+  'leadText': {
+    color: 'rgba(68, 66, 65, 1)',
+    fontSize: 22,
+    paddingTop: 20,
+    paddingBottom: 10,
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+  'describeText': {
+    color: 'rgba(68, 66, 65, 1)',
+    fontSize: 16,
+    textAlign: 'center',
   },
 });
 
@@ -34,7 +60,7 @@ export default class WebView extends Component {
       headerRight: (
         showOptions &&
         <TouchableOpacity onPress={actionSheet} title='在其他瀏覽器開啟'>
-          <Icon name='ios-open-outline' style={styles.icon} />
+          <Icon name='ios-open-outline' style={styles.actionIcon} />
         </TouchableOpacity>
       )
     };
@@ -44,6 +70,7 @@ export default class WebView extends Component {
     super(props);
     this.state = {
       loading: true,
+      error: false,
     };
   }
 
@@ -79,22 +106,44 @@ export default class WebView extends Component {
     )
   };
 
-  onLoad() {
+  onLoad = () => {
     this.setState({ loading: false });
-  }
+  };
+
+  onError = () => {
+    this.setState({ loading: false, error: true });
+  };
 
   render() {
     const { navigation: { state: { params: { url } } } } = this.props;
-    const { loading } = this.state;
+    const { loading, error } = this.state;
 
     return (
       <Container style={styles.pageContainer}>
-        <Web
-          onLoad={() => this.onLoad()}
-          source={{ uri: url }}
-        />
-        {loading &&
+        { !error &&
+          <Web
+            onLoad={this.onLoad}
+            onError={this.onError}
+            source={{ uri: url }}
+          />
+        }
+        { loading && !error &&
           <ActivityIndicator animating={loading} style={styles.activityIndicator} />
+        }
+        { error &&
+        <Content scrollEnabled={false}>
+          <Grid>
+            <Col style={styles.infoContainer}>
+              <Icon name="ios-sad-outline" style={styles.icon}/>
+              <Text style={styles.leadText}>
+                未能載入內容
+              </Text>
+              <Text style={styles.describeText}>
+                請檢查您的網絡連接。{'\n'}如持續遇到此問題，請聯絡我們以取得協助。
+              </Text>
+            </Col>
+          </Grid>
+        </Content>
         }
       </Container>
     );
