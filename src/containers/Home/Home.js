@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 import { Text, Container, Content, Grid, Col, Form, Item, Input, Button } from 'native-base';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { HeaderStyle } from '../../common/style';
 
 const styles = StyleSheet.create({
   'icon': {
@@ -49,7 +50,8 @@ const styles = StyleSheet.create({
 
 export default class Home extends Component {
   static navigationOptions = {
-    title: '好書價 BookCompare',
+    title: '好書價 BooksCompare',
+    ...HeaderStyle,
   };
 
   constructor(props: Props) {
@@ -60,9 +62,28 @@ export default class Home extends Component {
     };
   };
 
-  render() {
+  validateIsbnNumber() {
+    const { isbnNumber } = this.state;
+    return (isbnNumber !== '' && (isbnNumber.length === 10 || isbnNumber.length === 13))
+  };
+
+  onInputChange = value => {
+    this.setState({ isbnNumber: value });
+  };
+
+  navigateToScanner = () => {
+    const { navigation: { navigate } } = this.props;
+    navigate('BarcodeScanner');
+  };
+
+  navigateToResult = () => {
     const { isbnNumber } = this.state;
     const { navigation: { navigate } } = this.props;
+    navigate('SearchResult', { isbnNumber });
+  };
+
+  render() {
+    const { isbnNumber } = this.state;
 
     return (
       <Container style={styles.pageContainer}>
@@ -83,16 +104,17 @@ export default class Home extends Component {
                     <Item style={styles.inputContainer} regular>
                       <Input
                         keyboardType='numeric'
-                        onChangeText={(value) => {
-                          this.setState({ isbnNumber: value });
-                        }}
-                        placeholder='ISBN 碼'/>
+                        onChangeText={this.onInputChange}
+                        value={isbnNumber}
+                        placeholder='ISBN 碼'
+                        maxLength={13}
+                      />
                     </Item>
                   </Col>
                   <Col size={5} />
                   <Col size={15} style={styles.scannerBtnContainer}>
                     <Button
-                      onPress={() => navigate('BarcodeScanner')}
+                      onPress={this.navigateToScanner}
                       style={styles.scannerBtn}
                       title='掃描'>
                       <Text><Icon name="ios-barcode-outline" style={styles.scannerBtnIcon}/></Text>
@@ -100,11 +122,11 @@ export default class Home extends Component {
                   </Col>
                 </Grid>
                 <Button
-                  onPress={() => navigate('SearchResult', { isbnNumber })}
-                  style={(isbnNumber !== '' && (isbnNumber.length === 10 || isbnNumber.length === 13))
+                  onPress={this.navigateToResult}
+                  style={this.validateIsbnNumber()
                     ? styles.searchBtn
                     : [styles.searchBtn, styles.searchBtnDisabled]}
-                  disabled={!(isbnNumber !== '' && (isbnNumber.length === 10 || isbnNumber.length === 13))}
+                  disabled={!this.validateIsbnNumber()}
                   title='搜尋好書價'>
                   <Text>搜尋好書價</Text>
                 </Button>

@@ -1,13 +1,25 @@
 import React, { Component } from 'react';
-import { StyleSheet, FlatList, Linking } from 'react-native';
+import { FlatList, Image, Linking, StyleSheet } from 'react-native';
 import { Text, Container, Content, Grid, ListItem, Col, Left, Body, Right } from 'native-base';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { HeaderStyle } from '../../common/style';
+import AppLogo from '../../assets/logo.png';
 
 const styles = StyleSheet.create({
+  'pageContainer': {
+    backgroundColor: 'rgba(255, 255, 255, 1)',
+  },
+  'infoContainer': {
+    paddingTop: 50,
+    paddingBottom: 50,
+    paddingLeft: 20,
+    paddingRight: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   'appIcon': {
-    fontSize: 72,
-    color: 'rgba(68, 66, 65, 1)',
-    textAlign: 'center',
+    width: 96,
+    height: 96,
   },
   'leadText': {
     color: 'rgba(68, 66, 65, 1)',
@@ -22,21 +34,12 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textAlign: 'center',
   },
-  'pageContainer': {
-    backgroundColor: 'rgba(255, 255, 255, 1)',
-  },
-  'textContainer': {
-    paddingTop: 50,
-    paddingBottom: 50,
-    paddingLeft: 20,
-    paddingRight: 20,
+  'iconContainer': {
+    width: 35,
   },
   'icon': {
     fontSize: 24,
     color: 'rgba(202, 93, 59, 1)'
-  },
-  'iconContainer': {
-    width: 35,
   },
   'arrow': {
     fontSize: 20,
@@ -47,6 +50,7 @@ const styles = StyleSheet.create({
 export default class About extends Component {
   static navigationOptions = {
     title: '關於我們',
+    ...HeaderStyle,
   };
 
   constructor(props) {
@@ -55,17 +59,17 @@ export default class About extends Component {
       items: [{
         'title': '使用條款及私隱政策',
         'icon': 'ios-information-circle',
-        'url': 'https://andrewmmc.com',
+        'url': 'https://book-price-app.firebaseapp.com/privacy_policy.html',
         'inApp': true,
       }, {
         'title': '免責聲明',
         'icon': 'logo-buffer',
-        'url': 'https://andrewmmc.com',
+        'url': 'https://book-price-app.firebaseapp.com/declaration.html',
         'inApp': true,
       }, {
         'title': '評分及提交意見',
         'icon': 'md-star',
-        'url': 'https://andrewmmc.com',
+        'url': 'https://book-price-app.firebaseapp.com/feedback.html',
         'inApp': true,
       }, {
         'title': '(c) 2018 Andrew Mok',
@@ -106,10 +110,10 @@ export default class About extends Component {
       <Container style={styles.pageContainer}>
         <Content scrollEnabled={false}>
           <Grid>
-            <Col style={styles.textContainer}>
-              <Icon name="ios-search" style={styles.appIcon}/>
+            <Col style={styles.infoContainer}>
+              <Image style={styles.appIcon} source={AppLogo} />
               <Text style={styles.leadText}>
-                好書價 BookCompare
+                好書價 BooksCompare
               </Text>
               <Text style={styles.describeText}>
                 版本 v.1.0.0

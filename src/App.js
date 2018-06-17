@@ -7,9 +7,10 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Home from './containers/Home/Home';
 import BarcodeScanner from './containers/Home/BarcodeScanner';
 import SearchResult from './containers/Home/SearchResult';
-import WebView from './components/WebView';
 // AboutStack
 import About from './containers/About/About';
+// Common
+import WebView from './containers/Common/WebView';
 
 // Dirty fix for react-navigation issue & react-native issue
 // https://github.com/react-navigation/react-navigation/issues/3956
