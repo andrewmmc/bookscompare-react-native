@@ -17,10 +17,10 @@
 # http://www.gradle.org/docs/current/userguide/multi_project_builds.html#sec:decoupled_projects
 # org.gradle.parallel=true
 
-APP_RELEASE_STORE_FILE=BookPriceAppKey.keystore
-APP_RELEASE_KEY_ALIAS=BookPriceApp
-APP_RELEASE_STORE_PASSWORD=x9>7eMe=FgjBTo?A7DJeNq
-APP_RELEASE_KEY_PASSWORD=x9>7eMe=FgjBTo?A7DJeNq
+APP_RELEASE_STORE_FILE=
+APP_RELEASE_KEY_ALIAS=
+APP_RELEASE_STORE_PASSWORD=
+APP_RELEASE_KEY_PASSWORD=
 
 # Dirty bug fix for Requiring images with Gradle 4 fails release builds
 # https://github.com/react-navigation/react-navigation/issues/3097
