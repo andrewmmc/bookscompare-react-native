@@ -72,7 +72,7 @@ react-native run-android
 - [Andrew Mok](https://andrewmmc.com) (@andrewmmc)
 
 ## License
-- [Apache License 2.0](LICENSES.md)
+- [Apache License 2.0](LICENSE.md)
 
 ## Support
 - Give this repo a **star** if you like :)
