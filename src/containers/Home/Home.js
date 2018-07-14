@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 import { Text, Container, Content, Grid, Col, Form, Item, Input, Button } from 'native-base';
 import Icon from 'react-native-vector-icons/Ionicons';
+
 import { HeaderStyle } from '../../common/style';
+import { GATracker } from '../../utils/tracker';
 
 const styles = StyleSheet.create({
   'icon': {
@@ -68,15 +70,24 @@ export default class Home extends Component {
   };
 
   onInputChange = value => {
+    // Google Analytics tracking
+    GATracker.trackEvent('Home', 'Type ISBN Number');
+
     this.setState({ isbnNumber: value });
   };
 
   navigateToScanner = () => {
+    // Google Analytics tracking
+    GATracker.trackEvent('Home', 'Click Scanner Button');
+
     const { navigation: { navigate } } = this.props;
     navigate('BarcodeScanner');
   };
 
   navigateToResult = () => {
+    // Google Analytics tracking
+    GATracker.trackEvent('Home', 'Click Search Button');
+
     const { isbnNumber } = this.state;
     const { navigation: { navigate } } = this.props;
     navigate('SearchResult', { isbnNumber });
@@ -117,7 +128,7 @@ export default class Home extends Component {
                       onPress={this.navigateToScanner}
                       style={styles.scannerBtn}
                       title='掃描'>
-                      <Text><Icon name="ios-barcode-outline" style={styles.scannerBtnIcon}/></Text>
+                      <Text><Icon name="ios-camera" style={styles.scannerBtnIcon}/></Text>
                     </Button>
                   </Col>
                 </Grid>

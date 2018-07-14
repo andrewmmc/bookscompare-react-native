@@ -3,9 +3,7 @@ import { YellowBox } from 'react-native';
 import { Root } from 'native-base';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { GoogleAnalyticsTracker, GoogleAnalyticsSettings } from 'react-native-google-analytics-bridge';
 
-import { config } from './config';
 // HomeStack
 import Home from './containers/Home/Home';
 import BarcodeScanner from './containers/Home/BarcodeScanner';
@@ -14,6 +12,8 @@ import SearchResult from './containers/Home/SearchResult';
 import About from './containers/About/About';
 // Common
 import WebView from './containers/Common/WebView';
+// Utils
+import { GATracker } from './utils/tracker';
 
 // Dirty fix for react-navigation issue & react-native issue
 // https://github.com/react-navigation/react-navigation/issues/3956
@@ -23,10 +23,6 @@ YellowBox.ignoreWarnings([
   'Module RCTImageLoader',
   'Class RCTCxxModule was not exported',
 ]);
-
-const GATracker = new GoogleAnalyticsTracker(config.googleAnalytics);
-
-// GoogleAnalyticsSettings.setDryRun(true);
 
 const HomeStack = createStackNavigator({
   Home: { screen: Home },
@@ -78,16 +74,20 @@ function getActiveRouteName(navigationState) {
   return route.routeName;
 }
 
-export default () =>
-  <Root>
-    <AppNavigator
-      onNavigationStateChange={(prevState, currentState) => {
-        const currentScreen = getActiveRouteName(currentState);
-        const prevScreen = getActiveRouteName(prevState);
+export default () => {
+  const onNavigationStateChange = (prevState, currentState) => {
+    const currentScreen = getActiveRouteName(currentState);
+    const prevScreen = getActiveRouteName(prevState);
 
-        if (prevScreen !== currentScreen) {
-          GATracker.trackScreenView(currentScreen);
-        }
-      }}
-    />
-  </Root>;
+    if (prevScreen !== currentScreen) {
+      // Google Analytics tracking
+      GATracker.trackScreenView(currentScreen);
+    }
+  };
+
+  return (
+    <Root>
+      <AppNavigator onNavigationStateChange={onNavigationStateChange} />
+    </Root>
+  )
+};

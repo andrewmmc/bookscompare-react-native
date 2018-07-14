@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { StyleSheet, WebView as Web, TouchableOpacity, Linking, Platform, ActivityIndicator, Dimensions } from 'react-native';
 import { Container, Content, Grid, Col, Text, ActionSheet } from 'native-base';
 import Icon from 'react-native-vector-icons/Ionicons';
+
+import { GATracker } from '../../utils/tracker';
 import { HeaderStyle } from '../../common/style';
 
 const styles = StyleSheet.create({
@@ -82,6 +84,9 @@ export default class WebView extends Component {
   };
 
   showActionSheet = url => {
+    // Google Analytics tracking
+    GATracker.trackEvent('WebView', 'Show Action Sheet');
+
     const options =
       (Platform.OS === 'ios')
       ? ['以 Safari 開啟', '取消']

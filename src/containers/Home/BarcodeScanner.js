@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, Dimensions } from 'react-native';
 import { RNCamera } from 'react-native-camera';
+
 import { HeaderStyle } from '../../common/style';
+import { GATracker } from '../../utils/tracker';
 
 const styles = StyleSheet.create({
   'container': {
@@ -53,7 +55,13 @@ export default class BarcodeScanner extends Component {
     const { navigation: { navigate } } = this.props;
     const { type, data } = e;
     if (type === 'org.gs1.EAN-13') {
+      // Google Analytics tracking
+      GATracker.trackEvent('BarcodeScanner', 'Read Valid ISBN Barcode');
+
       navigate('SearchResult', { isbnNumber: data });
+    } else {
+      // Google Analytics tracking
+      GATracker.trackEvent('BarcodeScanner', 'Read Invalid ISBN Barcode');
     }
   };
 

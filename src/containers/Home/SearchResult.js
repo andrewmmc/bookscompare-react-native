@@ -3,7 +3,10 @@ import React, { Component } from 'react';
 import { StyleSheet, FlatList, View, ActivityIndicator } from 'react-native';
 import { Container, Content, ListItem, Thumbnail, Grid, Col, Text, Body, Right } from 'native-base';
 import Icon from 'react-native-vector-icons/Ionicons';
+
 import { HeaderStyle } from '../../common/style';
+import { GATracker } from '../../utils/tracker';
+import { config } from '../../config';
 
 const styles = StyleSheet.create({
   'pageContainer': {
@@ -63,7 +66,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const SEARCH_URL = 'https://us-central1-book-price-app.cloudfunctions.net/book/isbn/';
+const SEARCH_URL = config.searchUrl;
 
 export default class SearchResult extends Component {
   static navigationOptions = {
@@ -93,11 +96,21 @@ export default class SearchResult extends Component {
   }
 
   async onFetch(isbnNumber) {
+    // Google Analytics tracking
+    GATracker.trackEvent('SearchResult', 'Fetch result from API');
+
     this.setState({ loading: true });
     try {
+      // Google Analytics tracking
+      GATracker.trackEvent('SearchResult', 'Fetch result from API Success');
+
       const { data: { data } } = await axios.get(SEARCH_URL + isbnNumber);
       this.setState({ loading: false, data });
     } catch (e) {
+      // Google Analytics tracking
+      GATracker.trackEvent('SearchResult', 'Fetch result from API Error');
+      GATracker.trackException(e, false);
+
       console.error(e);
       // Alert.alert('發生未知錯誤', '請檢查您的網絡連接。', [{ text: '好' }], { cancelable: false });
       this.setState({ loading: false, error: true });
@@ -105,6 +118,9 @@ export default class SearchResult extends Component {
   }
 
   navigateToWebView = (url, name, source) => {
+    // Google Analytics tracking
+    GATracker.trackEvent('SearchResult', 'Click result from ListView');
+
     const { navigation: { navigate } } = this.props;
     navigate('SearchWebView', { url: url, title: `${source} - ${name}`, showOptions: true })
   };
@@ -147,6 +163,9 @@ export default class SearchResult extends Component {
               refreshing={loading}
             />
           </View>
+        }
+        {
+          // TODO: Move to error message components
         }
         { activeData.length <= 0 && !loading && !error &&
           <Content scrollEnabled={false}>

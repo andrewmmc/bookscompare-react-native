@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { FlatList, Image, Linking, StyleSheet } from 'react-native';
 import { Text, Container, Content, Grid, ListItem, Col, Left, Body, Right } from 'native-base';
 import Icon from 'react-native-vector-icons/Ionicons';
+
+import { version } from '../../../package.json';
+import { GATracker } from '../../utils/tracker';
 import { HeaderStyle } from '../../common/style';
 import AppLogo from '../../assets/logo.png';
 
@@ -67,7 +70,7 @@ export default class About extends Component {
         'url': 'https://book-price-app.firebaseapp.com/declaration.html',
         'inApp': true,
       }, {
-        'title': '評分及提交意見',
+        'title': '提交意見',
         'icon': 'md-star',
         'url': 'https://book-price-app.firebaseapp.com/feedback.html',
         'inApp': true,
@@ -81,6 +84,9 @@ export default class About extends Component {
   }
 
   navigateToWebView(title, url, inApp) {
+    // Google Analytics tracking
+    GATracker.trackEvent('About', 'Click ' + title + ' in ListView');
+
     const { navigation: { navigate } } = this.props;
     if (inApp) {
       navigate('AboutWebView', { url, title })
@@ -116,7 +122,7 @@ export default class About extends Component {
                 好書價 BooksCompare
               </Text>
               <Text style={styles.describeText}>
-                版本 v.1.0.2
+                版本 v.{version}
               </Text>
             </Col>
           </Grid>
