@@ -49,6 +49,10 @@ react-native run-android
 ```
 
 ## Changelog
+##### v.1.0.2
+- Add basic marketing tracking tool
+- Update dependencies for security and bugs fix
+
 ##### v.1.0.1
 - Bugs fix for no internet connection
 
