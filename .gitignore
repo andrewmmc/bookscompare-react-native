@@ -58,3 +58,6 @@ buck-out/
 # Android Signing Key
 android/gradle.properties
 android/app/*.keystore
+
+# Config
+src/config.js

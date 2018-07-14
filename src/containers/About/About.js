@@ -116,7 +116,7 @@ export default class About extends Component {
                 好書價 BooksCompare
               </Text>
               <Text style={styles.describeText}>
-                版本 v.1.0.1
+                版本 v.1.0.2
               </Text>
             </Col>
           </Grid>

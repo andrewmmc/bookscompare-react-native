@@ -148,6 +148,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-google-analytics-bridge')
     compile (project(':react-native-camera')) {
        exclude group: "com.android.support", module: 'support-v4'
     }

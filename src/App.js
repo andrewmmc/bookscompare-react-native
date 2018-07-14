@@ -3,6 +3,9 @@ import { YellowBox } from 'react-native';
 import { Root } from 'native-base';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { GoogleAnalyticsTracker, GoogleAnalyticsSettings } from 'react-native-google-analytics-bridge';
+
+import { config } from './config';
 // HomeStack
 import Home from './containers/Home/Home';
 import BarcodeScanner from './containers/Home/BarcodeScanner';
@@ -20,6 +23,10 @@ YellowBox.ignoreWarnings([
   'Module RCTImageLoader',
   'Class RCTCxxModule was not exported',
 ]);
+
+const GATracker = new GoogleAnalyticsTracker(config.googleAnalytics);
+
+// GoogleAnalyticsSettings.setDryRun(true);
 
 const HomeStack = createStackNavigator({
   Home: { screen: Home },
@@ -58,7 +65,29 @@ const AppNavigator = createBottomTabNavigator(
   },
 );
 
+// gets the current screen from navigation state
+function getActiveRouteName(navigationState) {
+  if (!navigationState) {
+    return null;
+  }
+  const route = navigationState.routes[navigationState.index];
+
+  if (route.routes) {
+    return getActiveRouteName(route);
+  }
+  return route.routeName;
+}
+
 export default () =>
   <Root>
-    <AppNavigator />
+    <AppNavigator
+      onNavigationStateChange={(prevState, currentState) => {
+        const currentScreen = getActiveRouteName(currentState);
+        const prevScreen = getActiveRouteName(prevState);
+
+        if (prevScreen !== currentScreen) {
+          GATracker.trackScreenView(currentScreen);
+        }
+      }}
+    />
   </Root>;
