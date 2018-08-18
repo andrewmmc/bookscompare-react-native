@@ -171,7 +171,7 @@ export default class SearchResult extends Component {
           <Content scrollEnabled={false}>
             <Grid>
               <Col style={styles.infoContainer}>
-                <Icon name="ios-sad-outline" style={styles.icon}/>
+                <Icon name="ios-sad" style={styles.icon}/>
                 <Text style={styles.leadText}>
                   未能找到結果
                 </Text>
@@ -188,7 +188,7 @@ export default class SearchResult extends Component {
         <Content scrollEnabled={false}>
           <Grid>
             <Col style={styles.infoContainer}>
-              <Icon name="ios-sad-outline" style={styles.icon}/>
+              <Icon name="ios-sad" style={styles.icon}/>
               <Text style={styles.leadText}>
                 未能載入內容
               </Text>

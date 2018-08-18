@@ -62,7 +62,7 @@ export default class WebView extends Component {
       headerRight: (
         showOptions &&
         <TouchableOpacity onPress={actionSheet} title='在其他瀏覽器開啟'>
-          <Icon name='ios-open-outline' style={styles.actionIcon} />
+          <Icon name='ios-share' style={styles.actionIcon} />
         </TouchableOpacity>
       )
     };
@@ -135,11 +135,14 @@ export default class WebView extends Component {
         { loading && !error &&
           <ActivityIndicator animating={loading} style={styles.activityIndicator} />
         }
+        {
+          // TODO: Move to error message components
+        }
         { error &&
         <Content scrollEnabled={false}>
           <Grid>
             <Col style={styles.infoContainer}>
-              <Icon name="ios-sad-outline" style={styles.icon}/>
+              <Icon name="ios-sad" style={styles.icon}/>
               <Text style={styles.leadText}>
                 未能載入內容
               </Text>
