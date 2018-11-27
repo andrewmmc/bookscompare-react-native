@@ -26,7 +26,7 @@ More features are coming soon, stay tuned!
 [![Screen Capture 1](assets/readme/preview-1.png)](https://andrewmmc.com/bookscompare)
 [![Screen Capture 2](assets/readme/preview-2.png)](https://andrewmmc.com/bookscompare)
 [![Screen Capture 3](assets/readme/preview-3.png)](https://andrewmmc.com/bookscompare)
-[![Screen Capture 4](assets/readme/preview-4.png)](https://andrewmmc.com/bookscompare)
+[![Screen Capture 4](assets/readme/preview-4.png)](https://andrewmmc.com/bookscompare) [![Greenkeeper badge](https://badges.greenkeeper.io/andrewmmc/bookscompare-app.svg)](https://greenkeeper.io/)
 
 ## Clone, Install and Run
 The instructions below will get you a copy of the project up and run on your machine.
